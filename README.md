@@ -33,7 +33,10 @@
 
 ### Data Model
 
-```plantuml
+
+![image](image.png)
+
+<!-- ```plantuml
 @startuml
 
 class Game {
@@ -81,7 +84,7 @@ Game "m" <-- "m" Genres
 Game "m" <-- "m" Tags
 
 @enduml
-```
+``` -->
 
 ## Instructions to run the application
 
