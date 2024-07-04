@@ -36,29 +36,28 @@ def upload_file(file):
     Upload a file.
     """
     try:
+        with open (os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename), 'wb') as f:
+            f.write(file.read())
+
+        integerFields = ['appid', 'required_age', 'price', 'dlc_count', 'positive', 'negative', 'score_rank']
+        booleanFields = ['windows', 'mac', 'linux']
+        m2mFields = ['supported_languages', 'categories', 'genres', 'tags']
+        mapColumnNameToModel = {
+            'supported_languages': SupportedLanguages,
+            'categories': Categories,
+            'genres': Genres,
+            'tags': Tags
+        }
+        mapColumnNameToSingular = {
+            'supported_languages': 'supported_language',
+            'categories': 'category',
+            'genres': 'genre',
+            'tags': 'tag'
+        }
+        
         with Session(engine) as session:
                 
             # save the file to the static folder
-            with open (os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename), 'wb') as f:
-                f.write(file.read())
-
-            m2mFields = ['supported_languages', 'categories', 'genres', 'tags']
-            mapColumnNameToModel = {
-                'supported_languages': SupportedLanguages,
-                'categories': Categories,
-                'genres': Genres,
-                'tags': Tags
-            }
-            mapColumnNameToSingular = {
-                'supported_languages': 'supported_language',
-                'categories': 'category',
-                'genres': 'genre',
-                'tags': 'tag'
-            }
-            integerFields = ['appid', 'required_age', 'price', 'dlc_count', 'positive', 'negative', 'score_rank']
-            booleanFields = ['windows', 'mac', 'linux']
-            
-            
             with open (os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename), encoding='utf-8', errors='ignore') as f:
                 reader = csv.reader(f)
                 columns = next(reader) 
@@ -102,11 +101,12 @@ def upload_file(file):
                                 objects.append(obj)
                             map[columns[i]] = objects
 
-
                     game = Game(**map)
                     session.add(game)
                     session.commit()
                     
+        # delete the file
+        os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename))
 
     except Exception as e:
         print(e)
