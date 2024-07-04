@@ -28,7 +28,7 @@ def api_post_upload_file():
         upload_file(file)
         return jsonify({"message": "File uploaded successfully"})
     except Exception as e:
-        return jsonify({"error": str(e)})
+        raise e
     
 
 @query_v1.route('query', methods=["GET"])

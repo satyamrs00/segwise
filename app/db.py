@@ -63,13 +63,13 @@ def upload_file(file):
     Upload a file.
     """
     try:
-        with open (os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename), 'wb') as f:
+        with open (f"./uploads/{file.filename}", 'wb') as f:
             f.write(file.read())
 
         
         with Session(engine) as session:
                 
-            with open (os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename), encoding='utf-8', errors='ignore') as f:
+            with open (f"./uploads/{file.filename}", encoding='utf-8', errors='ignore') as f:
                 reader = csv.reader(f)
                 columns = next(reader) 
                 
@@ -124,7 +124,7 @@ def upload_file(file):
                     session.commit()
                     
         # delete the file
-        os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename))
+        os.remove(f"./uploads/{file.filename}")
 
     except Exception as e:
         print(e)
