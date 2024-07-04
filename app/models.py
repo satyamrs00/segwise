@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List
 from typing import Optional
 from sqlalchemy.orm import Mapped
@@ -23,7 +24,7 @@ class Game(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     appid: Mapped[int] = mapped_column()
     name: Mapped[str] = mapped_column()
-    release_date: Mapped[str] = mapped_column()
+    release_date: Mapped[datetime] = mapped_column()
     required_age: Mapped[int] = mapped_column()
     price: Mapped[float] = mapped_column()
     dlc_count: Mapped[int] = mapped_column()

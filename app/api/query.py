@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.db import upload_file
+from app.db import upload_file, get_games
 from flask_cors import CORS
 from datetime import datetime
 
@@ -29,3 +29,19 @@ def api_post_upload_file():
         return jsonify({"message": "File uploaded successfully"})
     except Exception as e:
         return jsonify({"error": str(e)})
+    
+
+@query_v1.route('query', methods=["GET"])
+def api_get_query():
+    """
+    Query the database.
+    """
+
+    params = request.args
+
+    try:
+        games = get_games(params)
+        return jsonify(games)
+    except Exception as e:
+        return jsonify({"error": str(e)})
+    
