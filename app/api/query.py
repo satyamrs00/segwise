@@ -1,12 +1,7 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, g
 from app.db import upload_file, get_games
 from flask_cors import CORS
-from datetime import datetime
 
-from datetime import datetime, timedelta
-from flask import current_app, request, jsonify, g
-
-# import jwt
 
 query_v1 = Blueprint(
     'query_v1', 'query_v1', url_prefix='/api')
