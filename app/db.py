@@ -9,6 +9,8 @@ from werkzeug.local import LocalProxy
 
 from app.models import Game, SupportedLanguages, Categories, Genres, Tags, Base
 
+from definitions import integerFields, booleanFields, m2mFields, stringFields, dateFields, mapColumnNameToModel, mapColumnNameToSingular
+
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 
@@ -29,25 +31,6 @@ def get_datetime_from_string(dateString):
     Convert date string to datetime.
     """
     return datetime.strptime(dateString, '%b %d, %Y') if len(dateString) > 8 else datetime.strptime(dateString, '%b %Y')
-
-
-integerFields = ['appid', 'required_age', 'price', 'dlc_count', 'positive', 'negative', 'score_rank']
-booleanFields = ['windows', 'mac', 'linux']
-m2mFields = ['supported_languages', 'categories', 'genres', 'tags']
-stringFields = ['name', 'about_the_game', 'developers', 'publishers']
-dateFields = ['release_date']
-mapColumnNameToModel = {
-    'supported_languages': SupportedLanguages,
-    'categories': Categories,
-    'genres': Genres,
-    'tags': Tags
-}
-mapColumnNameToSingular = {
-    'supported_languages': 'supported_language',
-    'categories': 'category',
-    'genres': 'genre',
-    'tags': 'tag'
-}
 
 
 def upload_file(file):
