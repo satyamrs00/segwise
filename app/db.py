@@ -9,7 +9,7 @@ from werkzeug.local import LocalProxy
 
 from app.models import Game, SupportedLanguages, Categories, Genres, Tags, Base
 
-from definitions import integerFields, booleanFields, m2mFields, stringFields, dateFields, mapColumnNameToModel, mapColumnNameToSingular
+from app.definitions import integerFields, booleanFields, m2mFields, stringFields, dateFields, mapColumnNameToModel, mapColumnNameToSingular
 
 from sqlalchemy.orm import Session
 from sqlalchemy import select
